@@ -1,4 +1,4 @@
-name: Digger
+name: Digger Workflow
 
 on:
   workflow_dispatch:
@@ -12,7 +12,6 @@ run-name: "${{inputs.run_name}}"
 
 jobs:
   digger-job:
-    name: Digger
     runs-on: ubuntu-latest
     permissions:
       contents: write # required to merge PRs
@@ -21,26 +20,20 @@ jobs:
       pull-requests: write # required to post PR comments
       issues: read # required to check if PR number is an issue or not
       statuses: write # required to validate combined PR status
+
     steps:
       - uses: actions/checkout@v4
       - name: ${{ fromJSON(github.event.inputs.spec).job_id }}
         run: echo "job id ${{ fromJSON(github.event.inputs.spec).job_id }}"
-      - id: "auth"
-        uses: "google-github-actions/auth@v1"
-        with:
-          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
-          create_credentials_file: true
-      - name: "Set up Cloud SDK"
-        uses: "google-github-actions/setup-gcloud@v1"
-      - name: "Use gcloud CLI"
-        run: "gcloud info"
-      - name: digger run
-        uses: diggerhq/digger@vLatest
+      - uses: diggerhq/digger@vLatest
         with:
           digger-spec: ${{ inputs.spec }}
-          setup-aws: false
           setup-opentofu: true
           opentofu-version: 1.10.3
+          opentofu-tfe-token: ${{ secrets.TFE_TOKEN }}
+          opentofu-tfe-hostname: otaco.app
+          setup-google-cloud: true
+          google-auth-credentials: ${{ secrets.GCP_CREDENTIALS }}
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

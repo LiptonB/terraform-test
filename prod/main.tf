@@ -5,6 +5,14 @@ terraform {
       version = "6.8.0"
     }
   }
+
+  cloud {
+    hostname = "otaco.app"
+    organization = "org_01K969X0AVFXYF0F25RDB2H50G"    
+    workspaces {
+      name = "94e09279-9d8f-4170-8670-691cc61b8467"
+    }
+  }
 }
 
 provider "google" {
@@ -17,3 +25,7 @@ resource "google_compute_network" "vpc_network" {
   name = "terraform-network"
 }
 
+import {
+  to = google_compute_network.vpc_network
+  id = "projects/bl-experiments/global/networks/terraform-network"
+}
