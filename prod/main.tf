@@ -21,11 +21,6 @@ provider "google" {
   zone    = "us-central1-c"
 }
 
-resource "google_compute_network" "vpc_network" {
-  name = "terraform-network"
-}
-
-import {
-  to = google_compute_network.vpc_network
-  id = "projects/bl-experiments/global/networks/terraform-network"
-}
+# resource "google_compute_network" "vpc_network" {
+#   name = "terraform-network"
+# }
