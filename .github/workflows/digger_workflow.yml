@@ -28,10 +28,10 @@ jobs:
       - uses: diggerhq/digger@vLatest
         with:
           digger-spec: ${{ inputs.spec }}
-          setup-terraform: true
-          terraform-version: 1.5.6
-          terraform-tfe-token: ${{ secrets.TFE_TOKEN }}
-          terraform-tfe-hostname: otaco.app
+          setup-opentofu: true
+          opentofu-version: 1.10.3
+          opentofu-tfe-token: ${{ secrets.TFE_TOKEN }}
+          opentofu-tfe-hostname: otaco.app
           setup-google-cloud: true
           google-auth-credentials: ${{ secrets.GCP_CREDENTIALS }}
         env:
