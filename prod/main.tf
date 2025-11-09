@@ -27,5 +27,5 @@ resource "google_compute_network" "vpc_network" {
 
 import {
   to = google_compute_network.vpc_network
-  id = "projects/bl-experiments/regions/global/networks/terraform-network"
+  id = "projects/bl-experiments/global/networks/terraform-network"
 }
