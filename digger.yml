@@ -2,3 +2,14 @@ projects:
   - name: production
     dir: prod
     opentofu: true
+workflows:
+  workflow_with_conftest:
+    plan:
+      steps:
+        - init:
+        - plan:
+        - run: "cat ./prod.json && conftest test ./prod.json -p ../policies"
+    workflow_configuration:
+      on_pull_request_pushed: [digger plan]
+      on_pull_request_closed: [digger unlock]
+      on_commit_to_default: [digger apply]
