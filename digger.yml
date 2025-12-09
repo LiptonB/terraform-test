@@ -2,6 +2,7 @@ projects:
   - name: production
     dir: prod
     opentofu: true
+    workflow: workflow_with_conftest
 workflows:
   workflow_with_conftest:
     plan:
