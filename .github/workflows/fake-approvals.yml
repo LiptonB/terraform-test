@@ -2,10 +2,15 @@ name: Fake Approvals
 
 on:
   pull_request:
-    types: [labeled, unlabeled]
+    types: [labeled, unlabeled, opened, synchronize]
 
 jobs:
-  build:
+  check-approval:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "A label was added or removed"
+      - name: Check for approved label
+        if: contains(github.event.pull_request.labels.*.name, 'approved')
+        run: echo "PR is approved!"
+      - name: Fail if not approved
+        if: "!contains(github.event.pull_request.labels.*.name, 'approved')"
+        run: echo "PR is not approved!" && exit 1
