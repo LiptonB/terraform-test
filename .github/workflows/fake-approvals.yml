@@ -2,7 +2,7 @@ name: Fake Approvals
 
 on:
   pull_request:
-    types: [labeled, unlabeled, opened, synchronize]
+    types: [labeled, unlabeled, opened]
 
 jobs:
   check-approval:
