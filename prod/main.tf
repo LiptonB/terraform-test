@@ -24,3 +24,9 @@ provider "google" {
 resource "google_compute_network" "vpc_network" {
   name = "terraform-network"
 }
+
+resource "google_compute_subnetwork" "default_subnet" {
+  name          = "default"
+  ip_cidr_range = "10.0.1.0/24"
+  network       = google_compute_network.vpc_network.self_link
+}
